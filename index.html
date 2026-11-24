@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>FLOOR</title>
+<style>
+  html,body{margin:0;height:100%;background:#000;color:#fff;font-family:-apple-system,"Pretendard","Apple SD Gothic Neo",sans-serif}
+  body{display:flex;align-items:center;justify-content:center;text-align:center}
+  h1{font-size:44px;letter-spacing:.3em;margin:0 0 18px}
+  p{color:#aaa;font-size:15px;line-height:1.6;margin:0}
+  a{color:#7cc8ff}
+</style>
+</head>
+<body>
+<div>
+  <h1>FLOOR</h1>
+  <p id="msg">카메라 여는 중…</p>
+</div>
+<script>
+(async () => {
+  const msg = document.getElementById('msg');
+  try {
+    // 캐시 우회: 매번 최신 link.json
+    const r = await fetch('link.json?t=' + Date.now(), { cache: 'no-store' });
+    const j = await r.json();
+    if (j && j.url && j.live !== false) { location.replace(j.url); return; }
+    msg.innerHTML = '지금은 전시가 열려 있지 않아요.<br>The show is not live right now.';
+  } catch (e) {
+    msg.innerHTML = '연결이 잠시 불안정해요. 새로고침 해주세요.<br>Please refresh.';
+  }
+})();
+</script>
+</body>
+</html>
